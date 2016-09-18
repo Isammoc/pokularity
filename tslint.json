@@ -49,10 +49,7 @@
       true,
       "simple"
     ],
-    "semicolon": [
-      true,
-      "always"
-    ],
+    "semicolon": true,
     "triple-equals": [
       true,
       "allow-null-check"

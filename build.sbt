@@ -19,6 +19,7 @@ libraryDependencies ++= {
     "org.webjars.npm" % "angular__compiler" % ngVersion,
     "org.webjars.npm" % "angular__core" % ngVersion,
     "org.webjars.npm" % "angular__forms" % ngVersion,
+    "org.webjars.npm" % "angular__http" % ngVersion,
     "org.webjars.npm" % "angular__platform-browser-dynamic" % ngVersion,
     "org.webjars.npm" % "angular__platform-browser" % ngVersion,
     "org.webjars.npm" % "systemjs" % "0.19.31",
