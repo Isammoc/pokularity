@@ -10,6 +10,9 @@ libraryDependencies ++= {
   val ngVersion="2.0.0"
   Seq(
     cache,
+    ws,
+
+    "com.netaporter" %% "scala-uri" % "0.4.14",
 
     //angular2 dependencies
     "org.webjars.npm" % "angular__common" % ngVersion,
