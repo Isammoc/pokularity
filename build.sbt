@@ -19,7 +19,6 @@ libraryDependencies ++= {
     "org.webjars.npm" % "angular__platform-browser-dynamic" % ngVersion,
     "org.webjars.npm" % "angular__platform-browser" % ngVersion,
     "org.webjars.npm" % "systemjs" % "0.19.31",
-    "org.webjars.npm" % "todomvc-common" % "1.0.2",
     "org.webjars.npm" % "rxjs" % "5.0.0-beta.9",
     "org.webjars.npm" % "es6-promise" % "3.1.2",
     "org.webjars.npm" % "es6-shim" % "0.35.1",

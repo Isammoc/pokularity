@@ -5,9 +5,10 @@
         @* In this version of the application the typescript compilation is done by the play framework.
            The browser downloads .js files. *@
         <meta charset="utf-8">
-        <title>Angular2 • TodoMVC</title>
-        <link rel="stylesheet" href="@routes.Assets.versioned("lib/todomvc-common/base.css")">
-        <link rel="stylesheet" href="assets/stylesheets/todomvc-app.css">
+        <title>Pokularity</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link ref="icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+        <!--[if IE]><link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")" /><![endif]-->
         <script type='text/javascript' src='@routes.Assets.versioned("lib/systemjs/dist/system-polyfills.js")'></script>
         <script type='text/javascript' src='@routes.Assets.versioned("lib/core-js/client/shim.min.js")'></script>
         <script type='text/javascript' src='@routes.Assets.versioned("lib/zone.js/dist/zone.js")'></script>
@@ -23,7 +24,6 @@
                 'symbol-observable': 'assets/lib/symbol-observable'
 
             };
-
 
         var packages = {
                 'app': {main: 'main.js', defaultExtension: 'js'},
@@ -73,14 +73,6 @@
 		</script>
     </head>
     <body>
-        <todo-app></todo-app>
-        <footer class="info">
-            <p>Double-click to edit a todo</p>
-            <p>
-				Created by <a href="http://github.com/samccone">Sam Saccone</a> and <a href="http://github.com/colineberhardt">Colin Eberhardt</a>
-                using <a href="http://angular.io">Angular2</a>
-			</p>
-            <p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
-        </footer>
+        <pz-app></pz-app>
     </body>
 </html>
