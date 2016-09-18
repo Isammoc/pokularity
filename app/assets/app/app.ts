@@ -9,20 +9,20 @@ import {TodoStore} from "./services/todo.store"
 export default class TodoAppComponent {
     newTodoText = ""
 
-    constructor(private todoStore:TodoStore) {
+    constructor(private todoStore: TodoStore) {
         this.todoStore = todoStore
     }
 
-    stopEditing(todo:Todo, editedTitle:string) {
+    stopEditing(todo: Todo, editedTitle: string) {
         todo.title = editedTitle
         todo.editing = false
     }
 
-    cancelEditingTodo(todo:Todo) {
+    cancelEditingTodo(todo: Todo) {
         todo.editing = false
     }
 
-    updateEditingTodo(todo:Todo, editedTitle:string) {
+    updateEditingTodo(todo: Todo, editedTitle: string) {
         editedTitle = editedTitle.trim()
         todo.editing = false
 
@@ -33,7 +33,7 @@ export default class TodoAppComponent {
         todo.title = editedTitle
     }
 
-    editTodo(todo:Todo) {
+    editTodo(todo: Todo) {
         todo.editing = true
     }
 
@@ -41,11 +41,11 @@ export default class TodoAppComponent {
         this.todoStore.removeCompleted()
     }
 
-    toggleCompletion(todo:Todo) {
+    toggleCompletion(todo: Todo) {
         this.todoStore.toggleCompletion(todo)
     }
 
-    remove(todo:Todo) {
+    remove(todo: Todo) {
         this.todoStore.remove(todo)
     }
 

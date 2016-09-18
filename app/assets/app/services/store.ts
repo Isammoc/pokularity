@@ -7,6 +7,7 @@ export interface Todo {
 
     title: String
 }
+
 @Injectable()
 export class LocalStorageTodoStore implements TodoStore {
     todos:Array<Todo>
