@@ -1,4 +1,4 @@
-# Pokularity
+# Pokularity [![Build Status](https://travis-ci.org/Isammoc/pokularity.svg?branch=master)](https://travis-ci.org/Isammoc/pokularity)
 
 Exercise project to test my abilities to create a full stack web site.
 
