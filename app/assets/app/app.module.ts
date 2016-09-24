@@ -6,6 +6,7 @@ import { HttpModule } from '@angular/http';
 import { PzAppComponent } from './app.component';
 import { PzSearchComponent } from './search/search.component';
 import { PzDashboardComponent } from './dashboard/dashboard.component';
+import { PzDetailsComponent } from './details/pokemon-details.component';
 
 import { PzSearchService } from './search/search.service';
 
@@ -21,6 +22,7 @@ import { routing } from './app.routing';
         PzAppComponent
       , PzSearchComponent
       , PzDashboardComponent
+      , PzDetailsComponent
     ], bootstrap: [PzAppComponent]
     , providers: [
       PzSearchService

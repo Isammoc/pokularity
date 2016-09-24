@@ -1,5 +1,6 @@
 import '../rxjs-extensions';
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
@@ -14,9 +15,12 @@ import { PzSearchService } from './search.service';
 })
 export class PzSearchComponent implements OnInit {
   pokemons: Observable<Pokemon[]>;
+  isActive: boolean;
   private searchTerms = new Subject<string>();
 
-  constructor(private searchService: PzSearchService) {}
+  constructor(
+    private router: Router,
+    private searchService: PzSearchService) {}
 
   ngOnInit() {
     this.pokemons = this.searchTerms
@@ -26,10 +30,7 @@ export class PzSearchComponent implements OnInit {
   }
 
   search(term: string) {
+    this.isActive = true;
     this.searchTerms.next(term ? term.toLowerCase() : '');
-  }
-
-  print(pokemon: Pokemon) {
-    console.log(pokemon);
   }
 }

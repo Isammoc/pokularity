@@ -16,10 +16,6 @@ export class PzSearchService {
   }
 
   search(term: string): Pokemon[] {
-    console.log("Searching..." + term);
-    console.log("pokemons = " + this.pokemons.length);
-    let result = this.pokemons.filter(item => item.name.startsWith(term));
-    console.log(result);
-    return result;
+    return this.pokemons.filter(item => item.name.startsWith(term));
   }
 }

@@ -2,13 +2,16 @@ import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { PzDashboardComponent } from './dashboard/dashboard.component';
+import { PzDetailsComponent } from './details/pokemon-details.component';
 
 const appRoutes: Routes = [
   {
       path: 'dashboard'
     , component: PzDashboardComponent
-  },
-  {
+  }, {
+    path: 'pokemon/:name',
+    component: PzDetailsComponent
+  }, {
       path: ''
     , redirectTo: '/dashboard'
     , pathMatch: 'full'

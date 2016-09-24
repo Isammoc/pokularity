@@ -1,12 +1,12 @@
-<li class="dropdown" [class.open]="(pokemons | async)?.length > 0">
+<li class="dropdown" [class.open]="isActive && (pokemons | async)?.length > 0">
   <div class="navbar-form navbar-right dropdown-toggle" >
     <div class="form-group">
-      <input class="form-control" #searchBox id="search-box" (keyup)="search(searchBox.value)" placeholder="Pikachu"/>
+      <input class="form-control" #searchBox id="search-box" (keyup)="search(searchBox.value)" placeholder="Pikachu" />
     </div>
   </div>
   <ul class="dropdown-menu">
-    <li *ngFor="let pokemon of pokemons | async" (click)="print(pokemon)">
-      <a href="#">{{pokemon.name}}</a>
+    <li *ngFor="let pokemon of pokemons | async">
+      <a [routerLink]="'pokemon/'+[pokemon.name]" (click)="isActive=false">{{pokemon.name}}</a>
     </li>
   </ul>
 </li>
