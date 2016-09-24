@@ -1,4 +1,4 @@
-class PokemonStat {
+export class PokemonStat {
   hp: number;
   speed: number;
   attack: number;

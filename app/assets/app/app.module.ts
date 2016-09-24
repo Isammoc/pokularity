@@ -10,6 +10,7 @@ import { PzDetailsComponent } from './details/pokemon-details.component';
 
 import { PzSearchService } from './search/search.service';
 import { PzDetailsService } from './details/pokemon-details.service';
+import { PzTypesService } from './types/pokemon-types.service';
 
 import { routing } from './app.routing';
 
@@ -28,6 +29,7 @@ import { routing } from './app.routing';
     , providers: [
         PzSearchService
       , PzDetailsService
+      , PzTypesService
     ]
 })
 export class PzAppModule { }

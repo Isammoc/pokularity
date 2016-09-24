@@ -6,36 +6,17 @@
           <tr>
             <th rowspan="2">name</th>
             <th rowspan="2">value</th>
-            <th *ngIf="pokemon.types?.length > 0" [colSpan]="pokemon.types ? pokemon.types.length : 0">types</th>
+            <th *ngIf="types?.length > 0" [colSpan]="types ? types.length : 0">types</th>
           </tr>
           <tr>
-            <th *ngFor="let type of pokemon.types">{{type}}</th>
+            <th *ngFor="let type of types">{{type.name}}</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">hp</th>
-            <td>{{pokemon.stats.hp}}</td>
-          </tr>
-          <tr>
-            <th scope="row">speed</th>
-            <td>{{pokemon.stats.speed}}</td>
-          </tr>
-          <tr>
-            <th scope="row">attack</th>
-            <td>{{pokemon.stats.attack}}</td>
-          </tr>
-          <tr>
-            <th scope="row">defense</th>
-            <td>{{pokemon.stats.defense}}</td>
-          </tr>
-          <tr>
-            <th scope="row">special-attack</th>
-            <td>{{pokemon.stats['special-attack']}}</td>
-          </tr>
-          <tr>
-            <th scope="row">special-defense</th>
-            <td>{{pokemon.stats['special-defense']}}</td>
+          <tr *ngFor="let s of ['hp', 'speed', 'attack', 'defense', 'special-attack', 'special-defense']">
+            <th scope="row">{{s}}</th>
+            <td>{{pokemon.stats[s]}}</td>
+            <td *ngFor="let type of types" [class.success]="pokemon.stats[s] > type.stats[s]" [class.danger]="pokemon.stats[s] < type.stats[s]">{{type.stats[s]}}</td>
           </tr>
         </tbody>
     </table>
