@@ -10,12 +10,14 @@ import play.api.libs.functional.syntax._
 import play.api.cache.CacheApi
 import scala.concurrent.duration._
 
-case class PokemonDetail(name: String, images: List[String])
+case class PokemonDetail(name: String, images: List[String], stats: Map[String, Int])
+
 object PokemonDetail {
   object Implicits {
     implicit val pokemonDetailWrite = (
         (__ \ "name").write[String] and
-        (__ \ "images").write[List[String]]
+        (__ \ "images").write[List[String]] and
+        (__ \ "stats").write[Map[String, Int]]
       )(unlift(PokemonDetail.unapply))
   }
 }
@@ -74,14 +76,19 @@ class PokemonService @Inject() (ws: WSClient, cache: CacheApi) {
   private def loadDetail(name: String)(implicit executionContext: ExecutionContext): Future[Option[PokemonDetail]] = {
     get(apiBase / "pokemon" / name)
       .flatMap {
-        case Some(response) =>
-          get(((response \ "forms")(0) \ "url").as[String])
+        case Some(baseResponse) =>
+          val stats = (baseResponse \ "stats") match {
+            case JsDefined(JsArray(a)) =>
+              a.map(js => ((js \ "stat" \ "name").as[String], (js \ "base_stat").as[Int])).toMap
+            case _ => Map.empty[String, Int]
+          }
+          get(((baseResponse \ "forms").apply(0) \ "url").as[String]).map {
+            case Some(response) =>
+              val image = (response \ "sprites" \ "front_default").as[String]
+              Some(PokemonDetail(name, image :: Nil, stats))
+            case None => None
+          }
         case None => Future.successful(None)
-      }.map {
-        case Some(response) =>
-          val image = (response \ "sprites" \ "front_default").as[String]
-          Some(PokemonDetail(name, image :: Nil))
-        case None => None
       }
   }
 
