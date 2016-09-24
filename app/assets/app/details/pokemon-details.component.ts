@@ -1,21 +1,30 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Router, Params } from '@angular/router';
 
-import { Pokemon } from '../pokemon/pokemon';
+import { PzDetailsService } from './pokemon-details.service';
+import { PokemonDetail } from './pokemon-detail';
 
 @Component({
     selector: 'pz-details'
   , templateUrl: 'assets/app/details/pokemon-details.component.html'
 })
 export class PzDetailsComponent implements OnInit {
-  pokemon: Pokemon = {id:-1, name: ''};
+  pokemon: PokemonDetail;
 
-  constructor(private route: ActivatedRoute) {}
+  constructor(
+      private route: ActivatedRoute
+    , private router: Router
+    , private detailsService: PzDetailsService) {}
 
   ngOnInit(): void {
     this.route.params.forEach((params: Params) => {
       let name = params['name'];
-      this.pokemon.name = name;
+      this.pokemon = null;
+      this.detailsService.search(name).then(detail => {
+          this.pokemon = detail;
+      }).catch(error => {
+        this.router.navigate(["/dashboard"]);
+      });
     });
   }
 }

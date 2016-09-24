@@ -1,3 +1,7 @@
 <div class="card" *ngIf="pokemon">
   <h2>{{pokemon.name}}</h2>
+  <img src="{{pokemon.images[0]}}">
+</div>
+<div class="card" *ngIf="!pokemon">
+  Loading...
 </div>

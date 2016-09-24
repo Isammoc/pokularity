@@ -9,6 +9,7 @@ GET     /                           controllers.Application.index
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
 GET     /api/pokemon                controllers.PokemonController.list
+GET     /api/pokemon/:name          controllers.PokemonController.detail(name)
 
 GET     /api/*notFound              controllers.Application.notFound(notFound)
 GET     /*others                    controllers.Application.other(others)

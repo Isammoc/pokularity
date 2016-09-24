@@ -9,6 +9,7 @@ import { PzDashboardComponent } from './dashboard/dashboard.component';
 import { PzDetailsComponent } from './details/pokemon-details.component';
 
 import { PzSearchService } from './search/search.service';
+import { PzDetailsService } from './details/pokemon-details.service';
 
 import { routing } from './app.routing';
 
@@ -25,7 +26,8 @@ import { routing } from './app.routing';
       , PzDetailsComponent
     ], bootstrap: [PzAppComponent]
     , providers: [
-      PzSearchService
+        PzSearchService
+      , PzDetailsService
     ]
 })
 export class PzAppModule { }
