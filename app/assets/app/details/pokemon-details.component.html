@@ -4,8 +4,12 @@
     <table class="table-hover table" *ngIf="pokemon.stats">
         <thead>
           <tr>
-            <th>name</th>
-            <th>value</th>
+            <th rowspan="2">name</th>
+            <th rowspan="2">value</th>
+            <th *ngIf="pokemon.types?.length > 0" [colSpan]="pokemon.types ? pokemon.types.length : 0">types</th>
+          </tr>
+          <tr>
+            <th *ngFor="let type of pokemon.types">{{type}}</th>
           </tr>
         </thead>
         <tbody>

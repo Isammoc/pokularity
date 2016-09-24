@@ -1,44 +1,24 @@
 package services
 
-import scala.concurrent.Future
 import scala.concurrent.ExecutionContext
+import scala.concurrent.Future
+import scala.concurrent.duration.DurationInt
+
 import com.google.inject.Inject
-import play.api.libs.ws._
-import com.netaporter.uri.dsl._
-import play.api.libs.json._
-import play.api.libs.functional.syntax._
+import com.netaporter.uri.dsl.stringToUriDsl
+import com.netaporter.uri.dsl.uriToString
+import com.netaporter.uri.dsl.uriToUriOps
+
 import play.api.cache.CacheApi
-import scala.concurrent.duration._
+import play.api.libs.json.JsArray
+import play.api.libs.json.JsDefined
+import play.api.libs.json.JsLookupResult.jsLookupResultToJsLookup
+import play.api.libs.json.JsValue
+import play.api.libs.json.JsValue.jsValueToJsLookup
+import play.api.libs.ws.WSClient
+import models.Pokemon
+import models.PokemonDetail
 
-case class PokemonDetail(name: String, images: List[String], stats: Map[String, Int])
-
-object PokemonDetail {
-  object Implicits {
-    implicit val pokemonDetailWrite = (
-        (__ \ "name").write[String] and
-        (__ \ "images").write[List[String]] and
-        (__ \ "stats").write[Map[String, Int]]
-      )(unlift(PokemonDetail.unapply))
-  }
-}
-
-case class Pokemon(id: Int, name: String)
-object Pokemon {
-  object Implicits {
-    implicit val pokemonReads: Reads[Pokemon] = (
-        (__ \ "url").read[String].map { s =>
-          val r = s.split("/")
-          r(r.size - 1).toInt
-        } and
-        (__ \ "name").read[String]
-      )(Pokemon.apply _)
-
-    implicit val pokemonWrite: Writes[Pokemon] = (
-        (__ \ "id").write[Int] and
-        (__ \ "name").write[String]
-      )(unlift(Pokemon.unapply))
-  }
-}
 
 class PokemonService @Inject() (ws: WSClient, cache: CacheApi) {
   import Pokemon.Implicits.pokemonReads
@@ -82,10 +62,15 @@ class PokemonService @Inject() (ws: WSClient, cache: CacheApi) {
               a.map(js => ((js \ "stat" \ "name").as[String], (js \ "base_stat").as[Int])).toMap
             case _ => Map.empty[String, Int]
           }
+          val types = (baseResponse \ "types") match {
+            case JsDefined(JsArray(a)) =>
+              a.map(js => (js \ "type" \ "name").as[String])
+            case _ => List.empty
+          }
           get(((baseResponse \ "forms").apply(0) \ "url").as[String]).map {
             case Some(response) =>
               val image = (response \ "sprites" \ "front_default").as[String]
-              Some(PokemonDetail(name, image :: Nil, stats))
+              Some(PokemonDetail(name, image :: Nil, stats, types))
             case None => None
           }
         case None => Future.successful(None)

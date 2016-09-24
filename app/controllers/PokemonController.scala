@@ -6,8 +6,8 @@ import javax.inject.Inject
 import play.api.mvc.Action
 import play.api.libs.concurrent.Execution.Implicits._
 import play.api.libs.json.Json
-import services.Pokemon
-import services.PokemonDetail
+import models.Pokemon
+import models.PokemonDetail
 
 class PokemonController @Inject() (val pokemonService: PokemonService) extends Controller {
   def list = Action.async {
