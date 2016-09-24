@@ -2,17 +2,17 @@
 <!doctype html>
 <html lang="en" data-framework="angular2">
     <head>
-        @* in this version of the application the typescript compilation is done in the browser *@
-    <meta charset="utf-8">
-    <title>Pokularity</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <link rel="icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
-    <script src='@routes.Assets.versioned("lib/angular2/bundles/angular2-polyfills.js")'></script>
-    <script src='@routes.Assets.versioned("lib/systemjs/dist/system.js")'></script>
-    <script src='@routes.Assets.versioned("lib/typescript/lib/typescript.js")'></script>
-    <script src='@routes.Assets.versioned("lib/rxjs/bundles/Rx.js")'></script>
-    <script src='@routes.Assets.versioned("lib/angular2/bundles/angular2.dev.js")'></script>
-
+      <base href="/">
+      @* in this version of the application the typescript compilation is done in the browser *@
+      <meta charset="utf-8">
+      <title>Pokularity</title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+      <link rel="icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+      <script src='@routes.Assets.versioned("lib/angular2/bundles/angular2-polyfills.js")'></script>
+      <script src='@routes.Assets.versioned("lib/systemjs/dist/system.js")'></script>
+      <script src='@routes.Assets.versioned("lib/typescript/lib/typescript.js")'></script>
+      <script src='@routes.Assets.versioned("lib/rxjs/bundles/Rx.js")'></script>
+      <script src='@routes.Assets.versioned("lib/angular2/bundles/angular2.dev.js")'></script>
     </head>
     <body>
         <pz-app></pz-app>

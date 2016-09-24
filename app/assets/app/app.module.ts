@@ -5,17 +5,22 @@ import { HttpModule } from '@angular/http';
 
 import { PzAppComponent } from './app.component';
 import { PzSearchComponent } from './search/search.component';
+import { PzDashboardComponent } from './dashboard/dashboard.component';
 
 import { PzSearchService } from './search/search.service';
 
+import { routing } from './app.routing';
+
 @NgModule({
     imports: [
-      BrowserModule
+        BrowserModule
       , FormsModule
       , HttpModule
+      , routing
     ], declarations: [
-      PzAppComponent
+        PzAppComponent
       , PzSearchComponent
+      , PzDashboardComponent
     ], bootstrap: [PzAppComponent]
     , providers: [
       PzSearchService
