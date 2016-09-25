@@ -13,7 +13,6 @@ import { PzCardComponent } from './cards/pokemon-card.component';
 
 import { PzSearchService } from './search/search.service';
 import { PzDetailsService } from './details/pokemon-details.service';
-import { PzTypesService } from './types/pokemon-types.service';
 
 import { PzApiService } from './api/api.service';
 
@@ -37,7 +36,6 @@ import { routing } from './app.routing';
     , providers: [
         PzSearchService
       , PzDetailsService
-      , PzTypesService
       , PzApiService
     ]
 })

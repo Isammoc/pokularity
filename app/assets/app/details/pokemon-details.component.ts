@@ -1,8 +1,10 @@
+import 'rxjs/add/operator/toPromise';
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 
 import { PzDetailsService } from './pokemon-details.service';
-import { PzTypesService } from '../types/pokemon-types.service';
+import { PzApiService } from '../api/api.service';
 
 import { PokemonDetail } from '../models/pokemon-detail';
 import { PokemonType } from '../models/pokemon-type';
@@ -19,7 +21,7 @@ export class PzDetailsComponent implements OnInit {
       private route: ActivatedRoute
     , private router: Router
     , private detailsService: PzDetailsService
-    , private typesService: PzTypesService
+    , private apiService: PzApiService
   ) {}
 
   ngOnInit(): void {
@@ -30,7 +32,7 @@ export class PzDetailsComponent implements OnInit {
       this.detailsService.search(name).then(detail => {
           this.pokemon = detail;
           this.pokemon.types.forEach((type: string) => {
-            this.typesService.search(type).then(type => {
+            this.apiService.getType(type).toPromise().then(type => {
               this.types.push(type);
             });
           });
