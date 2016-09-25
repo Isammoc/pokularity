@@ -3,7 +3,7 @@ import 'rxjs/add/operator/toPromise';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 
-import { PzDetailsService } from './pokemon-details.service';
+import { PzDetailsService } from './details.service';
 import { PzApiService } from '../api/api.service';
 
 import { PokemonDetail } from '../models/pokemon-detail';
@@ -11,7 +11,7 @@ import { PokemonType } from '../models/pokemon-type';
 
 @Component({
     selector: 'pz-details'
-  , templateUrl: 'assets/app/details/pokemon-details.component.html'
+  , templateUrl: 'assets/app/details/details.component.html'
 })
 export class PzDetailsComponent implements OnInit {
   pokemon: PokemonDetail;

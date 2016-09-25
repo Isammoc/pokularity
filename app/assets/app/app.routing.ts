@@ -2,7 +2,7 @@ import { ModuleWithProviders } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
 import { PzDashboardComponent } from './dashboard/dashboard.component';
-import { PzDetailsComponent } from './details/pokemon-details.component';
+import { PzDetailsComponent } from './details/details.component';
 
 const appRoutes: Routes = [
   {

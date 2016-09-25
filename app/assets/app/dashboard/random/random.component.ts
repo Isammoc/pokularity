@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { PzDetailsService } from '../../details/pokemon-details.service';
+import { PzDetailsService } from '../../details/details.service';
 import { PzSearchService } from '../../search/search.service';
 
 import { Pokemon } from '../../models/pokemon';
