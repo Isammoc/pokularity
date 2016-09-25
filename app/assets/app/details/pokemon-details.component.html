@@ -24,6 +24,7 @@
   <div class="col-sm-3">
     <img src="{{pokemon.images[0]}}">
   </div>
+  <pz-tweets class="col-sm-12" [term]="pokemon.name"></pz-tweets>
 </div>
 <div class="card" *ngIf="!pokemon">
   Loading...
