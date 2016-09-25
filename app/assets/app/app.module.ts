@@ -6,14 +6,15 @@ import { HttpModule } from '@angular/http';
 import { PzAppComponent } from './app.component';
 import { PzSearchComponent } from './search/search.component';
 import { PzDashboardComponent } from './dashboard/dashboard.component';
-import { PzDetailsComponent } from './details/pokemon-details.component';
+import { PzDetailComponent } from './detail/detail.component';
 import { PzTweetsComponent } from './tweets/tweets.component';
 import { PzRandomComponent } from './dashboard/random/random.component';
-import { PzCardComponent } from './cards/pokemon-card.component';
+import { PzCardComponent } from './card/card.component';
 
 import { PzSearchService } from './search/search.service';
-import { PzDetailsService } from './details/pokemon-details.service';
-import { PzTypesService } from './types/pokemon-types.service';
+import { PzDetailService } from './detail/detail.service';
+
+import { PzApiService } from './api/api.service';
 
 import { routing } from './app.routing';
 
@@ -27,15 +28,15 @@ import { routing } from './app.routing';
         PzAppComponent
       , PzSearchComponent
       , PzDashboardComponent
-      , PzDetailsComponent
+      , PzDetailComponent
       , PzTweetsComponent
       , PzRandomComponent
       , PzCardComponent
     ], bootstrap: [PzAppComponent]
     , providers: [
         PzSearchService
-      , PzDetailsService
-      , PzTypesService
+      , PzDetailService
+      , PzApiService
     ]
 })
 export class PzAppModule { }

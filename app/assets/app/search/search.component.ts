@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Subject } from 'rxjs/Subject';
 
-import { Pokemon } from '../pokemon/pokemon';
+import { Pokemon } from '../models/pokemon';
 
 import { PzSearchService } from './search.service';
 

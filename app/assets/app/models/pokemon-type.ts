@@ -1,4 +1,4 @@
-import { PokemonStat } from '../details/pokemon-detail';
+import { PokemonStat } from './pokemon-stat';
 
 export class PokemonType {
   name: string;

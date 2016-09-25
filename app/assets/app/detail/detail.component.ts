@@ -1,25 +1,27 @@
+import 'rxjs/add/operator/toPromise';
+
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, Params } from '@angular/router';
 
-import { PzDetailsService } from './pokemon-details.service';
-import { PzTypesService } from '../types/pokemon-types.service';
+import { PzDetailService } from './detail.service';
+import { PzApiService } from '../api/api.service';
 
-import { PokemonDetail } from './pokemon-detail';
-import { PokemonType } from '../types/pokemon-type';
+import { PokemonDetail } from '../models/pokemon-detail';
+import { PokemonType } from '../models/pokemon-type';
 
 @Component({
-    selector: 'pz-details'
-  , templateUrl: 'assets/app/details/pokemon-details.component.html'
+    selector: 'pz-detail'
+  , templateUrl: 'assets/app/detail/detail.component.html'
 })
-export class PzDetailsComponent implements OnInit {
+export class PzDetailComponent implements OnInit {
   pokemon: PokemonDetail;
   types: PokemonType[];
 
   constructor(
       private route: ActivatedRoute
     , private router: Router
-    , private detailsService: PzDetailsService
-    , private typesService: PzTypesService
+    , private detailService: PzDetailService
+    , private apiService: PzApiService
   ) {}
 
   ngOnInit(): void {
@@ -27,10 +29,10 @@ export class PzDetailsComponent implements OnInit {
       let name = params['name'];
       this.pokemon = null;
       this.types = [];
-      this.detailsService.search(name).then(detail => {
+      this.detailService.search(name).then(detail => {
           this.pokemon = detail;
           this.pokemon.types.forEach((type: string) => {
-            this.typesService.search(type).then(type => {
+            this.apiService.getType(type).toPromise().then(type => {
               this.types.push(type);
             });
           });
