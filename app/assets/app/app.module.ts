@@ -8,6 +8,8 @@ import { PzSearchComponent } from './search/search.component';
 import { PzDashboardComponent } from './dashboard/dashboard.component';
 import { PzDetailsComponent } from './details/pokemon-details.component';
 import { PzTweetsComponent } from './tweets/tweets.component';
+import { PzRandomComponent } from './dashboard/random/random.component';
+import { PzCardComponent } from './cards/pokemon-card.component';
 
 import { PzSearchService } from './search/search.service';
 import { PzDetailsService } from './details/pokemon-details.service';
@@ -27,6 +29,8 @@ import { routing } from './app.routing';
       , PzDashboardComponent
       , PzDetailsComponent
       , PzTweetsComponent
+      , PzRandomComponent
+      , PzCardComponent
     ], bootstrap: [PzAppComponent]
     , providers: [
         PzSearchService

@@ -1,0 +1,10 @@
+<a [routerLink]="'/pokemon/'+[pokemon.name]">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h3 class="panel-title">{{pokemon.name}}</h3>
+    </div>
+    <div class="panel-body thumbnail">
+      <img src="{{pokemon.images[0]}}" alt="{{pokemon.name}}">
+    </div>
+  </div>
+</a>

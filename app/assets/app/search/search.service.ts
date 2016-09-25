@@ -6,16 +6,26 @@ import { Pokemon } from '../pokemon/pokemon';
 
 @Injectable()
 export class PzSearchService {
-  pokemons: Pokemon[] = [];
+  pokemons: Pokemon[];
+  private myPromise: Promise<Pokemon[]>;
 
   constructor(private http: Http) {
-    this.http
+    this.myPromise = this.http
       .get('/api/pokemon')
       .toPromise()
-      .then((r: Response) => this.pokemons = r.json() as Pokemon[]);
+      .then((r: Response) => r.json() as Pokemon[]);
+    this.myPromise.then((pokemons: Pokemon[]) => {this.pokemons = pokemons;});
   }
 
   search(term: string): Pokemon[] {
     return this.pokemons.filter(item => item.name.startsWith(term));
+  }
+
+  random(): Promise<Pokemon> {
+    return this.myPromise.then((pokemons: Pokemon[]) => {
+      let result = pokemons[Math.floor(Math.random() * pokemons.length)];
+      console.log(result);
+      return result;
+    });
   }
 }
