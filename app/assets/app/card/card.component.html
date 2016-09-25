@@ -4,7 +4,8 @@
       <h3 class="panel-title">{{pokemon.name}}</h3>
     </div>
     <div class="panel-body thumbnail">
-      <img src="{{pokemon.images[0]}}" alt="{{pokemon.name}}">
+      <img src="{{pokemon.images[0]}}" alt="{{pokemon.name}}" *ngIf="pokemon.name.indexOf('-') > -1">
+      <img src="http://www.pokestadium.com/sprites/xy/{{pokemon.name}}.gif" alt="{{pokemon.name}}" *ngIf="pokemon.name.indexOf('-') <= -1">
     </div>
   </div>
 </a>

@@ -1,6 +1,6 @@
 import '../rxjs-extensions';
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
+import { Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 
 import { Pokemon } from '../models/pokemon';
@@ -18,9 +18,20 @@ export class PzApiService {
     }
 
     getType(name: string): Observable<PokemonType> {
+      return this.getRawType(name)
+          .map(response => response.json() as PokemonType);
+    }
+
+    private getRawType(name: string): Observable<Response> {
       return this.http
           .get('/api/types/' + name)
-          .map(response => response.json() as PokemonType);
+          .switchMap((response: Response) => {
+            if(response.status === 503) {
+              return this.getRawType(name);
+            } else {
+              return  Observable.of(response);
+            }
+          });
     }
 
     getDetail(name: string): Observable<PokemonDetail> {
