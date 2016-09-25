@@ -1,4 +1,4 @@
 <h2>Random pokemons</h2>
 <div class="row">
-  <pz-card *ngFor="let pokemon of pokemons" class="col-sm-2" [pokemon]="pokemon"></pz-card>
+  <pz-card *ngFor="let i of [0,1,2,3,4,5]" class="col-sm-2" [pokemon]="pokemons[i]"></pz-card>
 </div>

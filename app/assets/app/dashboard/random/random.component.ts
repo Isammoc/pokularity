@@ -12,6 +12,7 @@ import { PokemonDetail } from '../../models/pokemon-detail';
 })
 export class PzRandomComponent implements OnInit {
   pokemons: PokemonDetail[] = [];
+
   constructor(
       private detailService: PzDetailService
     , private searchService: PzSearchService

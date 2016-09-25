@@ -6,23 +6,32 @@
           <tr>
             <th rowspan="2">name</th>
             <th rowspan="2">value</th>
-            <th *ngIf="types?.length > 0" [colSpan]="types ? types.length : 0">types</th>
+            <th [colSpan]="pokemon.types.length">types</th>
           </tr>
           <tr>
-            <th *ngFor="let type of types">{{type.name}}</th>
+            <th *ngFor="let t of pokemon.types; let i = index">{{types[i] ? types[i].name : 'Loading...' }}</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let s of ['hp', 'speed', 'attack', 'defense', 'special-attack', 'special-defense']">
             <th scope="row">{{s}}</th>
             <td>{{pokemon.stats[s]}}</td>
-            <td *ngFor="let type of types" [class.success]="pokemon.stats[s] > type.stats[s]" [class.danger]="pokemon.stats[s] < type.stats[s]">{{type.stats[s]}}</td>
+            <template ngFor [ngForOf]="pokemon.types" let-i="index">
+              <template [ngIf]="types[i]">
+                <td [class.success]="pokemon.stats[s] > types[i].stats[s]" [class.danger]="pokemon.stats[s] < types[i].stats[s]">{{types[i].stats[s]}}</td>
+              </template>
+              <template [ngIf]="!types[i]">
+                <td><img src="https://cdnjs.cloudflare.com/ajax/libs/jstree/3.3.2/themes/default-dark/throbber.gif"></td>
+              </template>
+            </template>
           </tr>
         </tbody>
     </table>
   </div>
   <div class="col-sm-3">
-    <img src="{{pokemon.images[0]}}">
+    <div class="thumbnail" *ngFor="let image of pokemon.images">
+      <img src="{{image}}">
+    </div>
   </div>
   <pz-tweets class="col-sm-12" [term]="pokemon.name"></pz-tweets>
 </div>

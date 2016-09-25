@@ -19,6 +19,7 @@ import play.api.libs.ws.WSClient
 import models.Pokemon
 import models.PokemonDetail
 import models.PokemonType
+import play.api.libs.json.JsObject
 
 
 class PokemonService @Inject() (ws: WSClient, cache: CacheApi) {
@@ -73,8 +74,12 @@ class PokemonService @Inject() (ws: WSClient, cache: CacheApi) {
           }
           val formUrl = ((baseResponse \ "forms")(0) \ "url").asOpt[String]
           get(formUrl.get).map ( _.flatMap { response =>
-              val image = (response \ "sprites" \ "front_default").asOpt[String]
-              name.map{ name => PokemonDetail(name, image.map( _ :: Nil).getOrElse(Nil), stats, types) }
+              val images = (response \ "sprites") match {
+                case JsDefined(JsObject(a)) =>
+                  a.seq.mapValues { _.asOpt[String]}
+                case _ => Map.empty
+              }
+              name.map{ name => PokemonDetail(name, images.values.flatten.toList, stats, types) }
           })
         case None => Future.successful(None)
       }
