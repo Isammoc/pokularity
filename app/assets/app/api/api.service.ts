@@ -9,32 +9,34 @@ import { PokemonType } from '../models/pokemon-type';
 
 @Injectable()
 export class PzApiService {
-    constructor(private http: Http) { }
+  constructor(private http: Http) { }
 
-    listAll(): Observable<Pokemon[]> {
-      return this.http
-          .get('/api/pokemon')
-          .map(response => response.json() as Pokemon[]);
-    }
+  listAll(): Observable<Pokemon[]> {
+    return this.without503(() => this.http
+        .get('/api/pokemon'))
+        .map(response => response.json() as Pokemon[]);
+  }
 
-    getType(name: string): Observable<PokemonType> {
-      return this.getRawType(name)
-          .map(response => response.json() as PokemonType);
-    }
+  getType(name: string): Observable<PokemonType> {
+    return this.without503(() => this.http
+          .get('/api/types/' + name))
+        .map(response => response.json() as PokemonType);
+  }
 
-    private getRawType(name: string): Observable<Response> {
-      return this.http
-          .get('/api/types/' + name)
-          .switchMap((response: Response) => {
-            if(response.status === 503) {
-              return this.getRawType(name);
-            } else {
-              return  Observable.of(response);
-            }
-          });
-    }
+  getDetail(name: string): Observable<PokemonDetail> {
+    return this.without503(() => this.http.get('/api/pokemon/' + name))
+        .map(response => response.json() as PokemonDetail);
+  }
 
-    getDetail(name: string): Observable<PokemonDetail> {
-      return this.http.get('/api/pokemon/' + name).map(response => response.json() as PokemonDetail);
-    }
+  private without503(orig: () => Observable<Response>): Observable<Response> {
+    return orig()
+      .switchMap((response: Response) => {
+        if(response.status === 503) {
+          return this.without503(orig);
+        } else {
+          return Observable.of(response);
+        }
+      })
+    ;
+  }
 }
