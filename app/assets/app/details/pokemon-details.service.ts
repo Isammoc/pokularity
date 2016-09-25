@@ -2,7 +2,7 @@ import 'rxjs/add/operator/toPromise';
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 
-import { PokemonDetail } from './pokemon-detail';
+import { PokemonDetail } from '../models/pokemon-detail';
 
 @Injectable()
 export class PzDetailsService {

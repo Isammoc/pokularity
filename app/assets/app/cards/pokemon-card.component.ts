@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
 
-import { PokemonDetail } from '../details/pokemon-detail';
+import { PokemonDetail } from '../models/pokemon-detail';
 
 @Component({
     selector: 'pz-card'

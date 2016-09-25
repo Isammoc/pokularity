@@ -4,8 +4,8 @@ import { ActivatedRoute, Router, Params } from '@angular/router';
 import { PzDetailsService } from './pokemon-details.service';
 import { PzTypesService } from '../types/pokemon-types.service';
 
-import { PokemonDetail } from './pokemon-detail';
-import { PokemonType } from '../types/pokemon-type';
+import { PokemonDetail } from '../models/pokemon-detail';
+import { PokemonType } from '../models/pokemon-type';
 
 @Component({
     selector: 'pz-details'

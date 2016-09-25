@@ -2,7 +2,7 @@ import 'rxjs/add/operator/toPromise';
 import { Injectable } from '@angular/core';
 import { Http, Response } from '@angular/http';
 
-import { Pokemon } from '../pokemon/pokemon';
+import { Pokemon } from '../models/pokemon';
 
 @Injectable()
 export class PzSearchService {
@@ -23,9 +23,7 @@ export class PzSearchService {
 
   random(): Promise<Pokemon> {
     return this.myPromise.then((pokemons: Pokemon[]) => {
-      let result = pokemons[Math.floor(Math.random() * pokemons.length)];
-      console.log(result);
-      return result;
+      return pokemons[Math.floor(Math.random() * pokemons.length)];
     });
   }
 }

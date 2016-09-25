@@ -3,8 +3,8 @@ import { Component, OnInit } from '@angular/core';
 import { PzDetailsService } from '../../details/pokemon-details.service';
 import { PzSearchService } from '../../search/search.service';
 
-import { Pokemon } from '../../pokemon/pokemon';
-import { PokemonDetail } from '../../details/pokemon-detail';
+import { Pokemon } from '../../models/pokemon';
+import { PokemonDetail } from '../../models/pokemon-detail';
 
 @Component({
     selector: 'pz-random'
