@@ -33,3 +33,4 @@ $ ./bin/activator run
  * [PokéAPI](http://pokeapi.co/) - Reach data for pokémon
  * [Angular2 Typescript todomvc](https://github.com/tastejs/todomvc/tree/master/examples/angular2) - template used
  * [Revisiting Realtime Angular 2](https://blog.pusher.com/revisiting-realtime-angular-2/) - component used for live tweets
+ * [Pokestadium](http://www.pokestadium.com/) - for some sprites

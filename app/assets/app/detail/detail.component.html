@@ -29,6 +29,9 @@
     </table>
   </div>
   <div class="col-sm-3">
+    <div class="thumbnail" *ngIf="pokemon.name.indexOf('-') <= -1">
+      <img src="http://www.pokestadium.com/sprites/xy/{{pokemon.name}}.gif" alt="{{pokemon.name}}">
+    </div>
     <div class="thumbnail" *ngFor="let image of pokemon.images">
       <img src="{{image}}">
     </div>
