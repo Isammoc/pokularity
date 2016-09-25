@@ -14,11 +14,7 @@ class Application extends Controller {
     Ok(views.html.index1())
   }
 
-  def notFound(path: String) = Action {
-    NotFound
-  }
+  def notFound(path: String) = Default.notFound
 
-  def other(path: String) = Action {
-    Ok(views.html.index1())
-  }
+  def other(path: String) = index
 }

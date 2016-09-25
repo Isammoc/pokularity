@@ -1,0 +1,8 @@
+<div class="tweets">
+  <h2>Tweets for {{term}}</h2>
+  <ul class="channel-results channel-{{className}}">
+    <li *ngFor="let result of tweets">
+      <p class="white" [innerHTML]="result.tweet.text"></p>
+    </li>
+  </ul>
+</div>

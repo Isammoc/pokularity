@@ -7,8 +7,11 @@ import { PzAppComponent } from './app.component';
 import { PzSearchComponent } from './search/search.component';
 import { PzDashboardComponent } from './dashboard/dashboard.component';
 import { PzDetailsComponent } from './details/pokemon-details.component';
+import { PzTweetsComponent } from './tweets/tweets.component';
 
 import { PzSearchService } from './search/search.service';
+import { PzDetailsService } from './details/pokemon-details.service';
+import { PzTypesService } from './types/pokemon-types.service';
 
 import { routing } from './app.routing';
 
@@ -23,9 +26,12 @@ import { routing } from './app.routing';
       , PzSearchComponent
       , PzDashboardComponent
       , PzDetailsComponent
+      , PzTweetsComponent
     ], bootstrap: [PzAppComponent]
     , providers: [
-      PzSearchService
+        PzSearchService
+      , PzDetailsService
+      , PzTypesService
     ]
 })
 export class PzAppModule { }
