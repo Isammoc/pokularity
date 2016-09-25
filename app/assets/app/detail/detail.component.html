@@ -29,7 +29,9 @@
     </table>
   </div>
   <div class="col-sm-3">
-    <img src="{{pokemon.images[0]}}">
+    <div class="thumbnail" *ngFor="let image of pokemon.images">
+      <img src="{{image}}">
+    </div>
   </div>
   <pz-tweets class="col-sm-12" [term]="pokemon.name"></pz-tweets>
 </div>
