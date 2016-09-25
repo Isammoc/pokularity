@@ -1,6 +1,7 @@
 import 'rxjs/add/operator/toPromise';
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+
+import { PzApiService } from '../api/api.service';
 
 import { PokemonDetail } from '../models/pokemon-detail';
 
@@ -8,9 +9,9 @@ import { PokemonDetail } from '../models/pokemon-detail';
 export class PzDetailsService {
   pokemon: PokemonDetail;
 
-  constructor(private http: Http) { }
+  constructor(private apiService: PzApiService) { }
 
   search(name: string): Promise<PokemonDetail> {
-    return this.http.get('/api/pokemon/' + name).toPromise().then(response => response.json() as PokemonDetail);
+    return this.apiService.getDetail(name).toPromise();
   }
 }

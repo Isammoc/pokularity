@@ -1,15 +1,18 @@
 import 'rxjs/add/operator/toPromise';
 import { Injectable } from '@angular/core';
-import { Http, Response } from '@angular/http';
+
+import { PzApiService } from '../api/api.service';
 
 import { PokemonType } from '../models/pokemon-type';
 
 @Injectable()
 export class PzTypesService {
 
-  constructor(private http: Http) { }
+  constructor(private apiService: PzApiService) { }
 
   search(name: string): Promise<PokemonType> {
-    return this.http.get('/api/types/' + name).toPromise().then(response => response.json() as PokemonType);
+    return this.apiService
+        .getType(name)
+        .toPromise();
   }
 }
