@@ -6,7 +6,7 @@ import { PzApiService } from '../api/api.service';
 import { PokemonDetail } from '../models/pokemon-detail';
 
 @Injectable()
-export class PzDetailsService {
+export class PzDetailService {
   pokemon: PokemonDetail;
 
   constructor(private apiService: PzApiService) { }
