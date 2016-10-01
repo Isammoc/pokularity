@@ -59,3 +59,7 @@ resolveFromWebjarsNodeModulesDir := true
 ))
 
 routesGenerator := InjectedRoutesGenerator
+
+disablePlugins(PlayLayoutPlugin)
+PlayKeys.playMonitoredFiles ++= (sourceDirectories in (Compile, TwirlKeys.compileTemplates)).value
+
