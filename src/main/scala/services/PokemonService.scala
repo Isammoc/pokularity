@@ -20,11 +20,11 @@ import models.Pokemon
 import models.PokemonDetail
 import models.PokemonType
 import play.api.libs.json.JsObject
+import play.api.libs.json.Json
+import scala.concurrent.duration.Duration
 
-
-class PokemonService @Inject() (ws: WSClient, cache: CacheApi) {
+class PokemonService @Inject() (ws: WSClient) {
   import Pokemon.Implicits.pokemonReads
-  val cacheDuration = 1.hour
 
   val apiBase = "http://pokeapi.co/api/v2"
 
@@ -32,7 +32,10 @@ class PokemonService @Inject() (ws: WSClient, cache: CacheApi) {
     println(s"url = $url")
     response.status match {
       case 200 => Some(response.json)
-      case _ => None
+      case _ => {
+        println(s"Not OK but status = ${response.status}")
+        None
+      }
     }
   }
 
@@ -44,18 +47,6 @@ class PokemonService @Inject() (ws: WSClient, cache: CacheApi) {
         case None => (None, List.empty)
       }
   }
-
-  private def load(implicit executionContext: ExecutionContext): Future[List[Pokemon]] = {
-    def loop(current: Future[(Option[String], List[Pokemon])], result: List[Pokemon]): Future[List[Pokemon]] = current.flatMap {
-      case (None, last) => {
-        Future.successful(result ++ last)
-      }
-      case (Some(url), last) => loop(loadPart(url), result ++ last)
-    }
-    loop(loadPart(apiBase / "pokemon" ? ("limit" -> 1000)), Nil)
-  }
-
-  private def loadDetail(name: String)(implicit executionContext: ExecutionContext): Future[Option[PokemonDetail]] = loadDetailFromUrl(apiBase / "pokemon" / name)
 
   private def loadDetailFromUrl(url: String)(implicit executionContext: ExecutionContext): Future[Option[PokemonDetail]] = {
     get(url)
@@ -73,38 +64,52 @@ class PokemonService @Inject() (ws: WSClient, cache: CacheApi) {
             case _ => List.empty
           }
           val formUrl = ((baseResponse \ "forms")(0) \ "url").asOpt[String]
-          get(formUrl.get).map ( _.flatMap { response =>
-              val images = (response \ "sprites") match {
-                case JsDefined(JsObject(a)) =>
-                  a.seq.mapValues { _.asOpt[String]}
-                case _ => Map.empty
-              }
-              name.map{ name => PokemonDetail(name, images.values.flatten.toList, stats, types) }
+          get(formUrl.get).map(_.flatMap { response =>
+            val images = (response \ "sprites") match {
+              case JsDefined(JsObject(a)) =>
+                a.seq.mapValues { _.asOpt[String] }
+              case _ => Map.empty
+            }
+            name.map { name => PokemonDetail(name, images.values.flatten.toList, stats, types) }
           })
         case None => Future.successful(None)
       }
   }
 
-  private def loadType(name: String)(implicit executionContext: ExecutionContext): Future[Option[PokemonType]] = {
-    get(apiBase / "type" / name)
-    .flatMap { case Some(response) =>
-      ((response \ "pokemon") match {
-        case JsDefined(JsArray(a)) =>
-          Future.sequence(a.map(js => details(((js \ "pokemon" \ "name" ).as[String]))))
-        case _ => Future.successful(List.empty)
-      }).map ( _.flatten).map { details =>
-        val stats = details.map(_.stats)
-        val keys = stats.flatMap(_.keys).toSet
-        Some(PokemonType(name, (for(key <- keys) yield (key, stats.flatMap(_.get(key)).sum / stats.size )).toMap))
+  def pokemons(implicit executionContext: ExecutionContext): Future[List[Pokemon]] = {
+    def loop(current: Future[(Option[String], List[Pokemon])], result: List[Pokemon]): Future[List[Pokemon]] = current.flatMap {
+      case (None, last) => {
+        Future.successful(result ++ last)
       }
-    case None =>
-      Future.successful(None)
-      }
+      case (Some(url), last) => loop(loadPart(url), result ++ last)
+    }
+    loop(loadPart(apiBase / "pokemon" ? ("limit" -> 1000)), Nil).map(_.filterNot(_.name.contains("-")))
   }
 
-  def pokemons(implicit executionContext: ExecutionContext): Future[List[Pokemon]] = cache.getOrElse("service.pokemon.all", cacheDuration)(load)
+  def details(name: String)(implicit executionContext: ExecutionContext): Future[Option[PokemonDetail]] = loadDetailFromUrl(apiBase / "pokemon" / name)
 
-  def details(name: String)(implicit executionContext: ExecutionContext): Future[Option[PokemonDetail]] = cache.getOrElse("service.pokemon.details." + name, cacheDuration)(loadDetail(name))
-
-  def types(name: String)(implicit executionContext: ExecutionContext): Future[Option[PokemonType]] = cache.getOrElse("service.pokemon.types." + name, cacheDuration)(loadType(name))
+  def types(name: String)(implicit executionContext: ExecutionContext): Future[Option[PokemonType]] = get(apiBase / "type" / name / "")
+    .flatMap {
+      case Some(response) =>
+        println("got a response")
+        ((response \ "pokemon") match {
+          case JsDefined(JsArray(a)) =>
+            Future.sequence(
+              a
+                .map { js =>
+                  (js \ "pokemon" \ "name").as[String]
+                }.filterNot(name => name.contains("-"))
+                .map { name =>
+                  println(s"name => $name")
+                  details(name)
+                })
+          case _ => Future.successful(List.empty)
+        }).map(_.flatten).map { details =>
+          val stats = details.map(_.stats)
+          val keys = stats.flatMap(_.keys).toSet
+          Some(PokemonType(name, (for (key <- keys) yield (key, stats.flatMap(_.get(key)).sum / stats.size)).toMap))
+        }
+      case None =>
+        Future.successful(None)
+    }
 }

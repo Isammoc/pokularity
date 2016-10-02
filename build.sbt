@@ -13,6 +13,7 @@ libraryDependencies ++= {
     ws,
 
     "com.netaporter" %% "scala-uri" % "0.4.14",
+    "com.typesafe.play.modules" %% "play-modules-redis" % "2.5.0",
 
     //angular2 dependencies
     "org.webjars.npm" % "angular__common" % ngVersion,
